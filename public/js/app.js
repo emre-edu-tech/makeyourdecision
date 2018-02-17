@@ -1,17 +1,27 @@
 "use strict";
 
+var app = {
+    title: "Decision Maker App",
+    subtitle: "Make your choices",
+    options: ['One', 'Two']
+};
 var template = React.createElement(
     "div",
     null,
     React.createElement(
         "h1",
         null,
-        "Decision Maker Application"
+        app.title
+    ),
+    app.subtitle && React.createElement(
+        "p",
+        null,
+        app.subtitle
     ),
     React.createElement(
         "p",
         null,
-        "This is some info"
+        app.options.length > 0 ? "Here are your options" : "No options"
     ),
     React.createElement(
         "ol",
@@ -29,25 +39,37 @@ var template = React.createElement(
     )
 );
 
+var user = {
+    name: 'Emre',
+    age: 33,
+    location: "İzmir"
+};
+
+function getLocation(location) {
+    if (location) return React.createElement(
+        "p",
+        null,
+        "Location: ",
+        location
+    );
+}
+
 var template2 = React.createElement(
     "div",
     null,
     React.createElement(
         "h1",
         null,
-        "Emre Kay\u0131k\xE7\u0131lar"
+        user.name ? user.name : "Anonymous"
     ),
-    React.createElement(
+    user.age && user.age >= 18 && React.createElement(
         "p",
         null,
-        "Age: 33"
+        "Age: ",
+        user.age
     ),
-    React.createElement(
-        "p",
-        null,
-        "Location: \u0130zmir"
-    )
+    getLocation(user.location)
 );
 var appRoot = document.getElementById("app");
 
-ReactDOM.render(template2, appRoot);
+ReactDOM.render(template, appRoot);
