@@ -1,26 +1,24 @@
-"use strict";
-
-var add = function add(a, b) {
+const add = function(a, b){
     console.log(arguments);
     return a + b;
 };
 
-var addArrow = function addArrow(a, b) {
+const addArrow = (a, b) => {
     // console.log(arguments); (no longer available use ES5 functions instead)
     return a + b;
 };
 
 console.log(add(55, 1, 101));
 
-var user = {
+const user = {
     name: "Emre",
     cities: ["İzmir", "İstanbul", "Beijing"],
-    printPlacesLived: function printPlacesLived() {
+    printPlacesLived: function(){
         console.log(this.name);
         console.log(this.cities);
         // workaround
-        var that = this;
-        this.cities.forEach(function (city) {
+        const that = this;
+        this.cities.forEach(function(city){
             console.log(that.name + " has lived in " + city);
         });
     }
@@ -29,17 +27,15 @@ var user = {
 user.printPlacesLived();
 
 // will work without a workaround
-var user2 = {
+const user2 = {
     name: "Kamil",
     cities: ["İzmir", "İstanbul", "Beijing"],
-    printPlacesLived: function printPlacesLived() {
-        var _this = this;
-
+    printPlacesLived: function(){
         console.log(this.name);
         console.log(this.cities);
-
-        this.cities.forEach(function (city) {
-            console.log(_this.name + " has lived in " + city);
+        
+        this.cities.forEach((city) => {
+            console.log(this.name + " has lived in " + city);
         });
     }
 };
@@ -47,17 +43,15 @@ var user2 = {
 user2.printPlacesLived();
 
 // ES6 function definition
-var user3 = {
+const user3 = {
     name: "Mahmut",
     cities: ["İzmir", "İstanbul", "Beijing"],
-    printPlacesLived: function printPlacesLived() {
-        var _this2 = this;
-
+    printPlacesLived(){
         console.log(this.name);
         console.log(this.cities);
 
-        this.cities.forEach(function (city) {
-            console.log(_this2.name + " has lived in " + city);
+        this.cities.forEach((city) => {
+            console.log(this.name + " has lived in " + city);
         });
     }
 };
@@ -65,17 +59,15 @@ var user3 = {
 user3.printPlacesLived();
 
 // using map method instead of forEach
-var user4 = {
+const user4 = {
     name: "Memduh",
     cities: ["İzmir", "İstanbul", "Beijing"],
-    printPlacesLived: function printPlacesLived() {
-        var _this3 = this;
-
+    printPlacesLived(){
         console.log(this.name);
         console.log(this.cities);
 
-        var cityMessages = this.cities.map(function (city) {
-            return _this3.name + " has lived in " + city;
+        const cityMessages = this.cities.map((city) => {
+            return this.name + " has lived in " + city;
         });
 
         return cityMessages;
@@ -85,15 +77,11 @@ var user4 = {
 console.log(user4.printPlacesLived());
 
 // challenge area
-var multiplier = {
+const multiplier = {
     numbers: [1, 2, 3, 4, 5],
     multiplyBy: 10,
-    multiply: function multiply() {
-        var _this4 = this;
-
-        return this.numbers.map(function (number) {
-            return _this4.multiplyBy * number;
-        });
+    multiply(){
+        return this.numbers.map((number) => this.multiplyBy * number);
     }
 };
 
