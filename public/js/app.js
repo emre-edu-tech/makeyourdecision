@@ -5,6 +5,7 @@ var app = {
     subtitle: "Make your choices",
     options: ['One', 'Two']
 };
+
 var template = React.createElement(
     "div",
     null,
@@ -70,6 +71,7 @@ var template2 = React.createElement(
     ),
     getLocation(user.location)
 );
+
 var appRoot = document.getElementById("app");
 
 ReactDOM.render(template, appRoot);
