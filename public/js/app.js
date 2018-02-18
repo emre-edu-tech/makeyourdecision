@@ -1,100 +1,117 @@
 "use strict";
 
-var add = function add(a, b) {
-    console.log(arguments);
-    return a + b;
+var app = {
+    title: "Decision Maker App",
+    subtitle: "Make your choices",
+    options: ['One', 'Two']
 };
 
-var addArrow = function addArrow(a, b) {
-    // console.log(arguments); (no longer available use ES5 functions instead)
-    return a + b;
-};
-
-console.log(add(55, 1, 101));
-
+var template = React.createElement(
+    "div",
+    null,
+    React.createElement(
+        "h1",
+        null,
+        app.title
+    ),
+    app.subtitle && React.createElement(
+        "p",
+        null,
+        app.subtitle
+    ),
+    React.createElement(
+        "p",
+        null,
+        app.options.length > 0 ? "Here are your options" : "No options"
+    ),
+    React.createElement(
+        "ol",
+        null,
+        React.createElement(
+            "li",
+            null,
+            "Item one"
+        ),
+        React.createElement(
+            "li",
+            null,
+            "Item two"
+        )
+    )
+);
+/// ----------------------------
 var user = {
-    name: "Emre",
-    cities: ["İzmir", "İstanbul", "Beijing"],
-    printPlacesLived: function printPlacesLived() {
-        console.log(this.name);
-        console.log(this.cities);
-        // workaround
-        var that = this;
-        this.cities.forEach(function (city) {
-            console.log(that.name + " has lived in " + city);
-        });
-    }
+    name: 'Emre',
+    age: 33,
+    location: "İzmir"
 };
 
-user.printPlacesLived();
+function getLocation(location) {
+    if (location) return React.createElement(
+        "p",
+        null,
+        "Location: ",
+        location
+    );
+}
 
-// will work without a workaround
-var user2 = {
-    name: "Kamil",
-    cities: ["İzmir", "İstanbul", "Beijing"],
-    printPlacesLived: function printPlacesLived() {
-        var _this = this;
-
-        console.log(this.name);
-        console.log(this.cities);
-
-        this.cities.forEach(function (city) {
-            console.log(_this.name + " has lived in " + city);
-        });
-    }
+var template2 = React.createElement(
+    "div",
+    null,
+    React.createElement(
+        "h1",
+        null,
+        user.name ? user.name : "Anonymous"
+    ),
+    user.age && user.age >= 18 && React.createElement(
+        "p",
+        null,
+        "Age: ",
+        user.age
+    ),
+    getLocation(user.location)
+);
+//// ------------------------------------------
+var count = 0;
+var addOne = function addOne() {
+    count += 1;
+    console.log(count);
+};
+var minusOne = function minusOne() {
+    count -= 1;
+    console.log(count);
+};
+var setupReset = function setupReset() {
+    count = 0;
+    console.log(count);
 };
 
-user2.printPlacesLived();
+var template3 = React.createElement(
+    "div",
+    null,
+    React.createElement(
+        "h1",
+        null,
+        "Count: ",
+        count
+    ),
+    React.createElement(
+        "button",
+        { id: "add_button", className: "button", onClick: addOne },
+        "+1"
+    ),
+    React.createElement(
+        "button",
+        { className: "minus_button", onClick: minusOne },
+        "-1"
+    ),
+    React.createElement(
+        "button",
+        { className: "reset_button", onClick: setupReset },
+        "Reset"
+    )
+);
 
-// ES6 function definition
-var user3 = {
-    name: "Mahmut",
-    cities: ["İzmir", "İstanbul", "Beijing"],
-    printPlacesLived: function printPlacesLived() {
-        var _this2 = this;
+var appRoot = document.getElementById("app");
 
-        console.log(this.name);
-        console.log(this.cities);
-
-        this.cities.forEach(function (city) {
-            console.log(_this2.name + " has lived in " + city);
-        });
-    }
-};
-
-user3.printPlacesLived();
-
-// using map method instead of forEach
-var user4 = {
-    name: "Memduh",
-    cities: ["İzmir", "İstanbul", "Beijing"],
-    printPlacesLived: function printPlacesLived() {
-        var _this3 = this;
-
-        console.log(this.name);
-        console.log(this.cities);
-
-        var cityMessages = this.cities.map(function (city) {
-            return _this3.name + " has lived in " + city;
-        });
-
-        return cityMessages;
-    }
-};
-
-console.log(user4.printPlacesLived());
-
-// challenge area
-var multiplier = {
-    numbers: [1, 2, 3, 4, 5],
-    multiplyBy: 10,
-    multiply: function multiply() {
-        var _this4 = this;
-
-        return this.numbers.map(function (number) {
-            return _this4.multiplyBy * number;
-        });
-    }
-};
-
-console.log(multiplier.multiply());
+ReactDOM.render(template3, appRoot);

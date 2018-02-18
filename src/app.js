@@ -15,7 +15,7 @@ const template = (
         </ol>
     </div>
 );
-
+/// ----------------------------
 const user = {
     name: 'Emre',
     age: 33,
@@ -34,7 +34,30 @@ const template2 = (
         {getLocation(user.location)}
     </div>
 );
+//// ------------------------------------------
+let count = 0;
+const addOne = () => {
+    count+=1;
+    console.log(count);
+};
+const minusOne = () => {
+    count-=1;
+    console.log(count);
+};
+const setupReset = () => {
+    count = 0;
+    console.log(count);
+};
+
+const template3 = (
+    <div>
+        <h1>Count: {count}</h1>
+        <button id="add_button" className="button" onClick={addOne}>+1</button>
+        <button className="minus_button" onClick={minusOne}>-1</button>
+        <button className="reset_button" onClick={setupReset}>Reset</button>
+    </div>
+);
 
 const appRoot = document.getElementById("app");
 
-ReactDOM.render(template, appRoot);
+ReactDOM.render(template3, appRoot);
