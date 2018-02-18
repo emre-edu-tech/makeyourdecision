@@ -1,45 +1,84 @@
 "use strict";
 
+/// Decision Maker Application (Main Application)
+// ---------------------------------------
+// app javascript object
 var app = {
     title: "Decision Maker App",
     subtitle: "Make your choices",
-    options: ['One', 'Two']
+    options: []
 };
 
-var template = React.createElement(
-    "div",
-    null,
-    React.createElement(
-        "h1",
-        null,
-        app.title
-    ),
-    app.subtitle && React.createElement(
-        "p",
-        null,
-        app.subtitle
-    ),
-    React.createElement(
-        "p",
-        null,
-        app.options.length > 0 ? "Here are your options" : "No options"
-    ),
-    React.createElement(
-        "ol",
+var appRoot = document.getElementById("app");
+
+var onFormSubmit = function onFormSubmit(event) {
+    event.preventDefault();
+
+    // console.log("form submitted");
+    // get the value of option input
+    var option = event.target.elements.option.value;
+    if (option) {
+        app.options.push(option);
+        event.target.elements.option.value = "";
+        // console.log(app.options);
+        renderDecisionApp();
+    }
+};
+
+var onRemoveOptions = function onRemoveOptions() {
+    // set the array to a new empty array
+    // app.options = [];
+    app.options.length = 0;
+    renderDecisionApp();
+};
+
+var renderDecisionApp = function renderDecisionApp() {
+    var template = React.createElement(
+        "div",
         null,
         React.createElement(
-            "li",
+            "h1",
             null,
-            "Item one"
+            app.title
+        ),
+        app.subtitle && React.createElement(
+            "p",
+            null,
+            app.subtitle
         ),
         React.createElement(
-            "li",
+            "p",
             null,
-            "Item two"
+            app.options.length > 0 ? "Here are your options" : "No options"
+        ),
+        React.createElement(
+            "p",
+            null,
+            app.options.length
+        ),
+        React.createElement(
+            "button",
+            { onClick: onRemoveOptions },
+            "Remove All"
+        ),
+        React.createElement(
+            "form",
+            { onSubmit: onFormSubmit },
+            React.createElement("input", { type: "text", name: "option" }),
+            React.createElement(
+                "button",
+                null,
+                "Add Option"
+            )
         )
-    )
-);
-/// ----------------------------
+    );
+
+    ReactDOM.render(template, appRoot);
+};
+
+renderDecisionApp();
+// ---------------------------------------
+// User Application
 var user = {
     name: 'Emre',
     age: 33,
@@ -71,47 +110,5 @@ var template2 = React.createElement(
     ),
     getLocation(user.location)
 );
-//// ------------------------------------------
-var count = 0;
-var addOne = function addOne() {
-    count += 1;
-    console.log(count);
-};
-var minusOne = function minusOne() {
-    count -= 1;
-    console.log(count);
-};
-var setupReset = function setupReset() {
-    count = 0;
-    console.log(count);
-};
-
-var template3 = React.createElement(
-    "div",
-    null,
-    React.createElement(
-        "h1",
-        null,
-        "Count: ",
-        count
-    ),
-    React.createElement(
-        "button",
-        { id: "add_button", className: "button", onClick: addOne },
-        "+1"
-    ),
-    React.createElement(
-        "button",
-        { className: "minus_button", onClick: minusOne },
-        "-1"
-    ),
-    React.createElement(
-        "button",
-        { className: "reset_button", onClick: setupReset },
-        "Reset"
-    )
-);
-
-var appRoot = document.getElementById("app");
-
-ReactDOM.render(template3, appRoot);
+// call this if you want to bind template2 to the appRoot
+// ReactDOM.render(template2, appRoot);

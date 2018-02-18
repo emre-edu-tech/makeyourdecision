@@ -1,21 +1,56 @@
+/// Decision Maker Application (Main Application)
+// ---------------------------------------
+// app javascript object
 const app = {
     title: "Decision Maker App",
     subtitle: "Make your choices",
-    options: ['One', 'Two']
+    options: []
 };
 
-const template = (
-    <div>
-        <h1>{app.title}</h1>
-        {app.subtitle && <p>{app.subtitle}</p>}
-        <p>{app.options.length > 0 ? "Here are your options" : "No options"}</p>
-        <ol>
-            <li>Item one</li>
-            <li>Item two</li>
-        </ol>
-    </div>
-);
-/// ----------------------------
+const appRoot = document.getElementById("app");
+
+const onFormSubmit = (event) => {
+    event.preventDefault();
+
+    // console.log("form submitted");
+    // get the value of option input
+    const option = event.target.elements.option.value;
+    if (option) {
+        app.options.push(option);
+        event.target.elements.option.value = "";
+        // console.log(app.options);
+        renderDecisionApp();
+    }
+};
+
+const onRemoveOptions = () => {
+    // set the array to a new empty array
+    // app.options = [];
+    app.options.length = 0;
+    renderDecisionApp();
+};
+
+const renderDecisionApp = () => {
+    const template = (
+        <div>
+            <h1>{app.title}</h1>
+            {app.subtitle && <p>{app.subtitle}</p>}
+            <p>{app.options.length > 0 ? "Here are your options" : "No options"}</p>
+            <p>{app.options.length}</p>
+            <button onClick={onRemoveOptions}>Remove All</button>
+            <form onSubmit={onFormSubmit}>
+                <input type="text" name="option"/>
+                <button>Add Option</button>
+            </form>
+        </div>
+    );
+
+    ReactDOM.render(template, appRoot);
+};
+
+renderDecisionApp();
+// ---------------------------------------
+// User Application
 const user = {
     name: 'Emre',
     age: 33,
@@ -34,30 +69,5 @@ const template2 = (
         {getLocation(user.location)}
     </div>
 );
-//// ------------------------------------------
-let count = 0;
-const addOne = () => {
-    count+=1;
-    console.log(count);
-};
-const minusOne = () => {
-    count-=1;
-    console.log(count);
-};
-const setupReset = () => {
-    count = 0;
-    console.log(count);
-};
-
-const template3 = (
-    <div>
-        <h1>Count: {count}</h1>
-        <button id="add_button" className="button" onClick={addOne}>+1</button>
-        <button className="minus_button" onClick={minusOne}>-1</button>
-        <button className="reset_button" onClick={setupReset}>Reset</button>
-    </div>
-);
-
-const appRoot = document.getElementById("app");
-
-ReactDOM.render(template3, appRoot);
+// call this if you want to bind template2 to the appRoot
+// ReactDOM.render(template2, appRoot);
