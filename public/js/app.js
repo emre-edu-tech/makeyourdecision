@@ -32,6 +32,8 @@ var onRemoveOptions = function onRemoveOptions() {
     renderDecisionApp();
 };
 
+var numbers = [55, 101, 1000];
+
 var renderDecisionApp = function renderDecisionApp() {
     var template = React.createElement(
         "div",
@@ -60,6 +62,25 @@ var renderDecisionApp = function renderDecisionApp() {
             "button",
             { onClick: onRemoveOptions },
             "Remove All"
+        ),
+        numbers.map(function (number) {
+            return React.createElement(
+                "p",
+                { key: number },
+                "Number: ",
+                number
+            );
+        }),
+        React.createElement(
+            "ol",
+            null,
+            app.options.map(function (option) {
+                return React.createElement(
+                    "li",
+                    { key: option },
+                    option
+                );
+            })
         ),
         React.createElement(
             "form",
