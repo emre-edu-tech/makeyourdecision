@@ -1,93 +1,67 @@
-/// Decision Maker Application (Main Application)
-// ---------------------------------------
-// app javascript object
-const app = {
-    title: "Decision Maker App",
-    subtitle: "Make your choices",
-    options: []
-};
-
-const appRoot = document.getElementById("app");
-
-const onFormSubmit = (event) => {
-    event.preventDefault();
-
-    // console.log("form submitted");
-    // get the value of option input
-    const option = event.target.elements.option.value;
-    if (option) {
-        app.options.push(option);
-        event.target.elements.option.value = "";
-        // console.log(app.options);
-        renderDecisionApp();
-    }
-};
-
-const onRemoveOptions = () => {
-    // set the array to a new empty array
-    // app.options = [];
-    app.options.length = 0;
-    renderDecisionApp();
-};
-
-const onMakeDecision = () => {
-    const randomNum = Math.floor((Math.random() * app.options.length));
-    const option = app.options[randomNum];
-    alert(option);
-    // console.log(randomNum);
-};
-
-const numbers = [55, 101, 1000];
-
-const renderDecisionApp = () => {
-    const template = (
+class IndecisionApp extends React.Component {
+    render() {
+      return (
         <div>
-            <h1>{app.title}</h1>
-            {app.subtitle && <p>{app.subtitle}</p>}
-            <p>{app.options.length > 0 ? "Here are your options" : "No options"}</p>
-            <p>{app.options.length}</p>
-            <button disabled={app.options.length === 0} onClick={onMakeDecision}>What should I do?</button>
-            <button onClick={onRemoveOptions}>Remove All</button>
-            {
-                numbers.map((number) => <p key={number}>Number: {number}</p>)
-            }
-            <ol>
-            {
-                app.options.map((option) => {
-                    return <li key={option}>{option}</li>
-                })
-            }
-            </ol>
-            <form onSubmit={onFormSubmit}>
-                <input type="text" name="option"/>
-                <button>Add Option</button>
-            </form>
+          <Header />
+          <Action />
+          <Options />
+          <AddOption />
         </div>
-    );
-
-    ReactDOM.render(template, appRoot);
-};
-
-renderDecisionApp();
-// ---------------------------------------
-// User Application
-const user = {
-    name: 'Emre',
-    age: 33,
-    location: "İzmir"
-};
-
-function getLocation(location){
-    if(location)
-        return <p>Location: {location}</p>;
-}
-
-const template2 = (
-    <div>
-        <h1>{user.name ? user.name : "Anonymous"}</h1>
-        {(user.age && user.age >= 18) && <p>Age: {user.age}</p>}
-        {getLocation(user.location)}
-    </div>
-);
-// call this if you want to bind template2 to the appRoot
-// ReactDOM.render(template2, appRoot);
+      );
+    }
+  }
+  
+  class Header extends React.Component {
+    render() {
+      return (
+        <div>
+          <h1>Indecision</h1>
+          <h2>Put your life in the hands of a computer</h2>
+        </div>
+      );
+    }
+  }
+  
+  class Action extends React.Component {
+    render() {
+      return (
+        <div>
+          <button>What should I do?</button>
+        </div>
+      );
+    }
+  }
+  
+  class Options extends React.Component {
+    render() {
+      return (
+        <div>
+          Options component here
+          <Option />
+        </div>
+      );
+    }
+  }
+  
+  class Option extends React.Component {
+    render() {
+      return (
+        <div>
+          Option component here
+        </div>
+      );
+    }
+  }
+  
+  class AddOption extends React.Component {
+    render() {
+      return (
+        <div>
+          AddOption component here
+        </div>
+      );
+    }
+  }
+  
+  ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
+  
