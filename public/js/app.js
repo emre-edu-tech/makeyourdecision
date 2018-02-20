@@ -1,38 +1,42 @@
 "use strict";
 
-var visibility = false;
-var toggleDetails = function toggleDetails() {
-    // check the boolean value of visibility variable
-    visibility = !visibility;
-    renderApp();
-    // console.log("clicked");
-};
-var appRoot = document.getElementById("app");
-var renderApp = function renderApp() {
-    var template = React.createElement(
-        "div",
-        null,
-        React.createElement(
-            "h1",
-            null,
-            "Visibility Toggle"
-        ),
-        React.createElement(
-            "button",
-            { id: "toggleButton", onClick: toggleDetails },
-            visibility ? "Hide Details" : "Show Details"
-        ),
-        visibility && React.createElement(
-            "div",
-            null,
-            React.createElement(
-                "p",
-                null,
-                "These are details"
-            )
-        )
-    );
-    ReactDOM.render(template, appRoot);
-};
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-renderApp();
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Person = function () {
+    // define the constructor function for the Person class
+    function Person() {
+        var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Anonymous";
+        var age = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+        _classCallCheck(this, Person);
+
+        this.name = name;
+        this.age = age;
+    }
+
+    _createClass(Person, [{
+        key: "getGreeting",
+        value: function getGreeting() {
+            // return "Hi I am " + this.name + "!";
+            // New ES6 strings
+            return "Hi! I am " + this.name + " and I am " + this.age + " years old";
+        }
+    }, {
+        key: "getDescription",
+        value: function getDescription() {
+            return this.name + " is " + this.age + " year(s) old";
+        }
+    }]);
+
+    return Person;
+}();
+
+var me = new Person("Emre Kayikcilar", 33);
+console.log(me.getGreeting());
+console.log(me.getDescription());
+// you don't have to provide all the constructor arguments - NO!
+var other = new Person();
+console.log(other.getGreeting());
+console.log(other.getDescription());
